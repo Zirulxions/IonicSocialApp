@@ -20,12 +20,13 @@ export class LoginPage implements OnInit {
     const { username, password } = this;
     try{
       const res = await this.afAuth.auth.signInWithEmailAndPassword(username, password);
-      console.log(res);
+      //console.log(res);
       const toast = await this.toastController.create({
-        message: res,
+        message: "Successfull: User Logged",
         duration: 3000
       });
       toast.present();
+      this.router.navigate(['/home']);
     } catch (err) {
       console.dir(err);
       const toast = await this.toastController.create({
