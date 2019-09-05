@@ -1,7 +1,8 @@
-.camera {
-	width: 200px;
-	height: 200px;
-	margin: 0 auto;
-	background: black;
-	display: none;
+#images {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.image {
+	width: 40%;
 }

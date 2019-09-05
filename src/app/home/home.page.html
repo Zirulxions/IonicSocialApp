@@ -21,6 +21,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="camera"></div>
+<ion-content padding>
+
+  <div id="images">
+    <div class="image" *ngFor="let posts of (userPosts | async)?.posts">
+      <ion-card>
+        <ion-img src="https://ucarecdn.com/{{ posts.image }}/-/crop/200x200/center/"></ion-img>
+      </ion-card>
+      <ion-content>
+        <p>{{ posts.desc }}</p>
+      </ion-content>
+    </div>
+  </div>
+
+
 </ion-content>

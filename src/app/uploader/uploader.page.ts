@@ -3,6 +3,8 @@ import { Http } from '@angular/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../users.service';
 import { firestore } from 'firebase/app';
+import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-uploader',
@@ -14,12 +16,12 @@ export class UploaderPage implements OnInit {
   imageURL: string;
   desc: string;
 
-  constructor(public user: UserService, public http: Http, public afstore: AngularFirestore) { }
+  constructor(private router: Router, public toastController: ToastController, public user: UserService, public http: Http, public afstore: AngularFirestore) { }
 
   ngOnInit() {
   }
 
-  createThePost(){
+  async createThePost(){
     const image = this.imageURL;
     const desc = this.desc;
 
@@ -29,6 +31,13 @@ export class UploaderPage implements OnInit {
         desc
       })
     });
+
+    const toast = await this.toastController.create({
+      message: "Post Created.",
+      duration: 3000
+    });
+    toast.present();
+    this.router.navigate(['/home']);
   }
 
   fileChanged(event){
