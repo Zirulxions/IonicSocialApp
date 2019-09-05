@@ -14,7 +14,6 @@ export class HomePage {
   constructor(public afAuth: AngularFireAuth, public toastController: ToastController, private router: Router) {}
 
   async logOut(){
-    console.log("oli1");
     await this.afAuth.auth.signOut();
     const toast = await this.toastController.create({
       message: "Good Bye..!",
@@ -22,6 +21,10 @@ export class HomePage {
     });
     toast.present();
     this.router.navigate(['/login']);
+  }
+
+  goToUserPage(){
+    this.router.navigate(['/profile']);
   }
 
 }
