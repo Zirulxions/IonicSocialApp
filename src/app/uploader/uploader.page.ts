@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../users.service';
@@ -15,6 +15,8 @@ export class UploaderPage implements OnInit {
 
   imageURL: string;
   desc: string;
+
+  @ViewChild('fileButton', {static: false}) fileButton;
 
   constructor(private router: Router, public toastController: ToastController, public user: UserService, public http: Http, public afstore: AngularFirestore) { }
 
@@ -38,6 +40,10 @@ export class UploaderPage implements OnInit {
     });
     toast.present();
     this.router.navigate(['/home']);
+  }
+
+  uploadFile(){
+    this.fileButton.nativeElement.click();
   }
 
   fileChanged(event){

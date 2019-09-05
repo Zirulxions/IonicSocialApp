@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 interface user {
   username: string,
@@ -10,7 +12,7 @@ interface user {
 export class UserService {
   private user: user
 
-  constructor(private afAuth: AngularFireAuth) { }
+  constructor(public toastController: ToastController, private afAuth: AngularFireAuth, private router: Router) { }
 
   setUser(user: user){
     this.user = user;
@@ -26,11 +28,21 @@ export class UserService {
         });
         return user.uid;
       } else {
-        throw new Error("No user Logged.");
+        this.toastAlert();
+        this.router.navigate(['/login']);
       }
     } else {
       return this.user.uid;
     }
     return this.user.uid
+  }
+
+  async toastAlert(){
+    await this.afAuth.auth.signOut();
+    const toast = await this.toastController.create({
+      message: "There is no user online.",
+      duration: 3000
+    });
+    toast.present();
   }
 }
