@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,19 +15,31 @@ export class LoginPage implements OnInit {
   username: string = "";
   password: string = "";
 
-  constructor(public afAuth: AngularFireAuth, public toastController: ToastController, private router: Router) { }
+  constructor(public afAuth: AngularFireAuth, public toastController: ToastController, private router: Router, public user: UserService) { }
 
   async logIn(){
     const { username, password } = this;
     try{
       const res = await this.afAuth.auth.signInWithEmailAndPassword(username, password);
       //console.log(res);
-      const toast = await this.toastController.create({
-        message: "Successfull: User Logged",
-        duration: 3000
-      });
-      toast.present();
-      this.router.navigate(['/home']);
+      if(res.user){
+        this.user.setUser({
+          username,
+          uid: res.user.uid
+        });
+        const toast = await this.toastController.create({
+          message: "Successfull: User Logged",
+          duration: 3000
+        });
+        toast.present();
+        this.router.navigate(['/home']);
+      } else {
+        const toast = await this.toastController.create({
+          message: "Error.",
+          duration: 3000
+        });
+        toast.present();
+      }
     } catch (err) {
       console.dir(err);
       const toast = await this.toastController.create({
