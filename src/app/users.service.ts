@@ -5,17 +5,16 @@ interface user {
   uid: string
 }
 
-@Injectable
+@Injectable()
 export class UserService {
   private user: user
 
-  constructor() {
-
-  }
+  constructor() { }
 
   setUser(user: user){
     this.user = user;
   }
+
   getUID() {
     return this.user.uid
   }

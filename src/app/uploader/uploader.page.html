@@ -8,16 +8,15 @@
 </ion-header>
 
 <ion-content>
-  <div class="center">
-		<div class="camera"></div>
-    <input type="file" (change)="fileChanged($event)">
-  </div>
+	<div class="camera"></div>
+
+  <input type="file" (change)="fileChanged($event)" *ngIf="!imageURL">
 
   <ion-card *ngIf="imageURL">
     <img *ngIf="imageURL" src="https://ucarecdn.com/{{ imageURL }}/-/quality/lightest/-/preview/270x270/"/>
     <ion-card-content>
-      <ion-textarea placeholder="Enter some description" [(ngModel)]="desc"></ion-textarea>
-      <ion-button shape="round" color="primary">POST</ion-button>
+      <ion-textarea placeholder="Write Something" [(ngModel)]="desc"></ion-textarea>
+      <ion-button shape="round" color="primary" (click)="createThePost()">POST</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>

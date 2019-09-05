@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
-import { AngularFireStore } from '@angular/fire/firestore';
-import { UserService } from '../user.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { UserService } from '../users.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,7 @@ export class RegisterPage implements OnInit {
   password: string = "";
   cpassword: string = "";
 
-  constructor(public user: UserService, public afstore: AngularFireStore, public afAuth: AngularFireAuth, public toastController: ToastController, private router: Router) { }
+  constructor(public user: UserService, public afstore: AngularFirestore, public afAuth: AngularFireAuth, public toastController: ToastController, private router: Router) { }
 
   ngOnInit() {
   }
@@ -34,13 +34,13 @@ export class RegisterPage implements OnInit {
       try{
         const res = await this.afAuth.auth.createUserWithEmailAndPassword(username, password);
 
-        this.afstore.doc(`users/${res.user.uid}`).set({
+        this.afstore.doc(`user/${res.user.uid}`).set({
           username
-        })
+        });
 
         this.user.setUser({
           username,
-          uid res.user.uid
+          uid: res.user.uid
         });
 
         const toast = await this.toastController.create({
