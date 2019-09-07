@@ -18,6 +18,10 @@ export class UserService {
     this.user = user;
   }
 
+  getUser(){
+    return this.user;
+  }
+
   getUID() {
     if(!this.user){
       if(this.afAuth.auth.currentUser){
