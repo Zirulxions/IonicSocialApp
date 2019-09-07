@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="closeChat()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Global Shat</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <!--
+  <div *ngIf="room">
+    <ion-card *ngFor="let mensaje of room.messages">
+      <ion-card-content>
+        {{mensaje.content}}
+      </ion-card-content>
+    </ion-card>
+  </div>
+  -->
+</ion-content>
+
+<ion-footer padding>
+  <ion-item>
+    <ion-textarea [(ngModel)]="msg"></ion-textarea>
+    <ion-buttons>
+      <ion-button fill="clear" (click)="sendMessage()">
+        <ion-icon slot="icon-only" name="send"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-footer>

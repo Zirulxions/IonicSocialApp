@@ -18,7 +18,9 @@ export class UploaderPage implements OnInit {
 
   @ViewChild('fileButton', {static: false}) fileButton;
 
-  constructor(private router: Router, public toastController: ToastController, public user: UserService, public http: Http, public afstore: AngularFirestore) { }
+  constructor(private afstore: AngularFirestore, private router: Router, public toastController: ToastController, public user: UserService, public http: Http) {
+    const check = afstore.doc(`user/${user.getUID()}`);
+  }
 
   ngOnInit() {
   }
@@ -48,7 +50,6 @@ export class UploaderPage implements OnInit {
 
   fileChanged(event){
     const files = event.target.files;
-    //console.log(files);
 
     const data = new FormData();
     data.append('file', files[0]);

@@ -38,4 +38,8 @@ export class HomePage {
     this.router.navigate(['/uploader']);
   }
 
+  goToChatPage(){
+    this.router.navigate(['/chat']);
+  }
+
 }
