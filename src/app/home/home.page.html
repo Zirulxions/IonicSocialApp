@@ -32,10 +32,13 @@
     <div class="image" *ngFor="let posts of (userPosts | async)?.posts">
       <ion-card>
         <ion-img src="https://ucarecdn.com/{{ posts.image }}/"></ion-img>
+        <ion-card-header>
+          <p>{{ posts.desc }}</p>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Container</p>
+        </ion-card-content>
       </ion-card>
-      <ion-content>
-        <p>{{ posts.desc }}</p>
-      </ion-content>
     </div>
   </div>
 

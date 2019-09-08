@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../users.service';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { ToastController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { UserService } from '../users.service';
 import { firestore } from 'firebase/app';
 
 @Component({
@@ -12,11 +14,28 @@ import { firestore } from 'firebase/app';
 })
 export class ChatPage implements OnInit {
 
-  public messageList = [];
+  userMessages;
+
+  textFromSrv: any;
   public msg : string;
 
-  constructor(private afAuth: AngularFireAuth, public user: UserService, private afstore: AngularFirestore, private router: Router) {
+  constructor(public toastController: ToastController, private afAuth: AngularFireAuth, public user: UserService, private afstore: AngularFirestore, private router: Router) {
     const check = afstore.doc(`user/${user.getUID()}`);
+
+    const messageArray = afstore.doc(`chat/${user.getChatRoom()}`);
+    this.userMessages = messageArray.valueChanges();
+
+    this.userMessages.subscribe(function(data){
+      console.log(data);
+    });
+  }
+
+  async messageView(){
+    const toast = await this.toastController.create({
+      message: "Mensaje Enviado..!",
+      duration: 3000
+    });
+    toast.present();
   }
 
   ngOnInit() {
@@ -27,8 +46,7 @@ export class ChatPage implements OnInit {
     if(this.afAuth.auth.currentUser){
       const usrUp = this.afAuth.auth.currentUser.email;
       const msgUp = this.msg;
-      const dateUp = new Date();
-      //console.log(msgUp + " " + dateUp + " " + usrUp.email);
+      const dateUp = new Date().toString();
 
       const res = this.afstore.doc(`chat/messages`).update({
         messageArray: firestore.FieldValue.arrayUnion({
@@ -38,6 +56,8 @@ export class ChatPage implements OnInit {
         })
       });
 
+      this.messageView();
+
       this.msg = "";
     }
   }
@@ -45,7 +65,5 @@ export class ChatPage implements OnInit {
   closeChat(){
     this.router.navigate(['/home']);
   }
-
-  //chatboxes
 
 }

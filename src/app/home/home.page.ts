@@ -16,8 +16,13 @@ export class HomePage {
   userPosts;
 
   constructor(private afstore: AngularFirestore, private user: UserService, public afAuth: AngularFireAuth, public toastController: ToastController, private router: Router) {
+    //console.log(user.getUID());
     const posts = afstore.doc(`user/${user.getUID()}`);
     this.userPosts = posts.valueChanges();
+    console.log(this.userPosts);
+    this.userPosts.subscribe(function(data){
+      console.log(data);
+    });
   }
 
   async logOut(){

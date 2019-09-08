@@ -10,15 +10,21 @@
 </ion-header>
 
 <ion-content padding>
-  <!--
-  <div *ngIf="room">
-    <ion-card *ngFor="let mensaje of room.messages">
-      <ion-card-content>
-        {{mensaje.content}}
-      </ion-card-content>
-    </ion-card>
+  <div id="extras">
+    <div class="extra" *ngFor="let messageArray of (userMessages | async)?.messageArray">
+      <ion-card color="dark">
+        <ion-card-content>
+          <h5>{{ messageArray.usrUp }}</h5>
+        </ion-card-content>
+        <ion-card-content>
+          <h2>{{ messageArray.msgUp }}</h2>
+        </ion-card-content>
+        <ion-card-content>
+          <h5>{{ messageArray.dateUp }}</h5>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
-  -->
 </ion-content>
 
 <ion-footer padding>

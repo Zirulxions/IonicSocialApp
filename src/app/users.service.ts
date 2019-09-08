@@ -8,9 +8,14 @@ interface user {
   uid: string
 }
 
+interface message{
+  messages: string;
+}
+
 @Injectable()
 export class UserService {
-  private user: user
+  private user: user;
+  private message: message;
 
   constructor(public toastController: ToastController, private afAuth: AngularFireAuth, private router: Router) { }
 
@@ -18,8 +23,15 @@ export class UserService {
     this.user = user;
   }
 
-  getUser(){
-    return this.user;
+  setMessage(message: message){
+    this.message = message;
+  }
+
+  logOut(){
+    this.setUser({
+      username: null,
+      uid: null
+    })
   }
 
   getUID() {
@@ -39,6 +51,13 @@ export class UserService {
       return this.user.uid;
     }
     return this.user.uid
+  }
+
+  getChatRoom(){
+    this.setMessage({
+      messages: 'messages'
+    })
+    return this.message.messages;
   }
 
   async toastAlert(){
